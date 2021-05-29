@@ -4,7 +4,7 @@ import java.sql.Date;
 
 public class Principal {
     public static  void main (String[] args){
-        int option = 6;
+        int option = 4;
        switch (option){
            // cadastro adm
            case 1:

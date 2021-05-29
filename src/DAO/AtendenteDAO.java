@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class AtendenteDAO {
@@ -14,32 +15,31 @@ public class AtendenteDAO {
     ConnectionFactory connection = new ConnectionFactory();
     Connection con = connection.conexao();
 
-    public ArrayList<Paciente> buscarPacientes(){
-        ArrayList<Paciente> pacientes = new ArrayList<>();
-        ResultSet rs = null;
+    public void buscarPacientes(){
         try{
             PreparedStatement request = con.prepareStatement(sqlSearch);
-
-            rs = request.executeQuery();
-
-            while (rs.next()){
-                Paciente paciente = new Paciente();
-                paciente.setNome(rs.getString("nome"));
-                paciente.setIdade(rs.getInt("idade"));
-                paciente.setEndereco(rs.getString("endereco"));
-                paciente.setProfissaoSaude(rs.getBoolean("profissaoSaude"));
-                paciente.setVacinado(rs.getBoolean("vacinado"));
-                paciente.setPrioridade(rs.getInt("prioridade"));
-                paciente.setDataVacinacao(rs.getDate("dataVacinacao"));
-                pacientes.add(paciente);
-                System.out.println(pacientes);
-                System.out.println(paciente);
+            ResultSet rs = request.executeQuery();
+            Paciente paciente = new Paciente();
+            while(rs.next()){
+                String nome = rs.getString("nome");
+                int idade = rs.getInt("idade");
+                String endereco = rs.getString("endereco");
+                boolean profissaoSaude = rs.getBoolean("profissaoSaude");
+                boolean vacinado = rs.getBoolean("vacinado");
+                int prioridade = rs.getInt("prioridade");
+                Date dataVacinacao = rs.getDate("dataVacinacao");
+                paciente.setNome(nome);
+                paciente.setIdade(idade);
+                paciente.setEndereco(endereco);
+                paciente.setProfissaoSaude(profissaoSaude);
+                paciente.setVacinado(vacinado);
+                paciente.setPrioridade(prioridade);
+                paciente.setDataVacinacao(dataVacinacao);
+                }
             }
-
-        }catch (Exception e){
+        catch (Exception e){
             e.printStackTrace();
         }
-        return pacientes;
     }
     public void confirmarVacina(String nome){ //TO-DO
         try{
