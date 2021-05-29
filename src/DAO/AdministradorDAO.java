@@ -95,16 +95,6 @@ public class AdministradorDAO extends Usuario {
         }
     }
 
-    public void removerPaciente (Integer id){
-        try{
-            PreparedStatement request = con.prepareStatement(sqlRemovePaciente);
-            request.setInt(1, id);
-            request.execute();
-        }catch (Exception e){
-            return;
-        }
-    }
-
     public void gerarRelatorio(){
         try{
             PreparedStatement request = con.prepareStatement(sqlRlt);

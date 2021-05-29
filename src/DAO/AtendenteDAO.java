@@ -9,7 +9,8 @@ import java.util.Date;
 
 public class AtendenteDAO {
     String sqlSearch = "SELECT * FROM tb_paciente WHERE vacinado = 0 ORDER BY prioridade DESC;";
-    String sqlAplicado = "UPDATE tb_paciente SET vacinado=1, dataVacinacao=NOW() WHERE nome= ?";
+    String sqlAplicado = "UPDATE tb_paciente SET vacinado=1, dataVacinacao=SYSDATE() WHERE nome= ? AND id=?";
+    String sqlPaciente = "SELECT id FROM tb_paciente WHERE nome = ?;";
     ConnectionFactory connection = new ConnectionFactory();
     Connection con = connection.conexao();
 
@@ -39,13 +40,29 @@ public class AtendenteDAO {
             e.printStackTrace();
         }
     }
-    public void confirmarVacina(String nome){ //TO-DO
+    public void confirmarVacina(String nome){
+        int idPaciente = this.getIdPaciente(nome);
         try{
-
             PreparedStatement request = con.prepareStatement(sqlAplicado);
+            request.setString(1,nome);
+            request.setInt(2,idPaciente);
             request.execute();
         }catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    private int getIdPaciente(String nome){
+        int paciente = 0;
+        try{
+            PreparedStatement request = con.prepareStatement(sqlPaciente);
+            ResultSet rs = request.executeQuery();
+            request.setString(1,nome);
+            paciente = rs.getInt("id");
+            request.execute();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return paciente;
     }
 }
