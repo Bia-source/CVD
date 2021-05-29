@@ -1,11 +1,27 @@
+## CRIANDO BANCO DE DADOS USUARIO
 #CREATE DATABASE db_usuario;
+
+## MOSTARNDO BANCO DE DADOS
 # SHOW DATABASES;
+
+## SELECIONANDO O BANCO DE DADOS
 #USE db_usuario;
+
+## MOSTRANDO TODAS AS TABELAS DO BANCO SELECIONADO
 #SHOW TABLES;
+
+## DELETANDO TABELA DE PACIENTES
+-- DROP TABLE tb_paciente;
+
+## MOSTRANDO AS COLUNAS DA TABELA PACIENTE
 #DESCRIBE tb_paciente;
--- SELECT * FROM tb_paciente;
+
+## MOSTRANDO TUDO QUE TEM NA TABELA PACIENTE
+#SELECT * FROM tb_paciente ORDER BY prioridade DESC;
+
+## CRIANDO TABELA PACIENTE
 -- CREATE TABLE tb_paciente(
---   id INT AUTO_INCREMENT,
+--   id INT AUTO_INCREMENT PRIMARY KEY,
 --   nome VARCHAR(200),
 --   idade INT,
 --   endereco VARCHAR(200),
@@ -14,6 +30,8 @@
 --   prioridade INT,
 --   dataVacinacao DATE
 -- );
+
+## CRIANDO TABELA DE ADMINISTRADORES
 -- CREATE TABLE tb_administrador(
 --   id INT AUTO_INCREMENT primary KEY,
 --   nome VARCHAR(200),
@@ -21,13 +39,30 @@
 --   senha VARCHAR(200),
 --   administrador BIT DEFAULT 1
 -- );
+
+## INSERINDO UM NOVO ADMINISTRADOR
 -- INSERT INTO tb_administrador (login,senha,nome,administrador)
 -- VALUES('bia_ferreirads@yahoo.com', '1234', 'Beatriz',  1);
+
+## AJUSTANDO A HORA
 #SET GLOBAL TIME_ZONE = '-3:00';
+
+## SELECIONANDO A TABELA ADMINISTRADOR
 -- SELECT * FROM tb_administrador WHERE administrador = 1;
--- UPDATE tb_paciente SET vacinado=1, dataVacinacao=NOW() WHERE nome=(value);
--- SELECT * FROM tb_paciente WHERE vacinado = 0 ORDER BY prioridade ASC;
+
+## ATUALIZA O STATUS DE VACINACAO E DATA DE VACINACAO
+#UPDATE tb_paciente SET vacinado=1, dataVacinacao=SYSDATE() WHERE nome=('paciente10') AND id=5;
+-- UPDATE tb_paciente SET vacinado=1, dataVacinacao=NOW() WHERE nome=('paciente2');
+
+## SELECIONA TODAS AS COLUNAS DA TABELA DE PACIENTES ONDE OS PACIENTES AINDA NAO FORAM VACINADOS EM ORDEM DECRESCENTE DE PRIORIDADE
+-- SELECT * FROM tb_paciente WHERE vacinado = 0 ORDER BY prioridade DESC;
+
+## INSERE NA TABELA PACIENTE UM NOVO PACIENTE
 -- INSERT INTO tb_paciente (nome,idade,endereco,profissaoSaude,vacinado,prioridade, dataVacinacao)
 -- VALUES('paciente1',20,'AV.Brasil',true,false,2,null)
+
+## SELECIONA A COLUNA VACINA NA TABELA PACIENTE E ORDENA OS VACINADOS EM ORDEM CRESCENTE POR IDADE
 -- SELECT vacinado FROM tb_paciente WHERE vacinado=1 ORDER BY idade ASC;
-#UPDATE tb_paciente SET vacinado=1, dataVacinacao=NOW() WHERE nome=('paciente1');
+
+#Busca de Paciente para retornar seu id
+#SELECT id FROM tb_paciente WHERE nome = ('paciente1');
