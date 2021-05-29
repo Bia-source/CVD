@@ -6,12 +6,13 @@ import model.Usuario;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 public class AdministradorDAO extends Usuario {
     String sqlAdm = "INSERT INTO tb_administrador (login, senha, nome, administrador) VALUES(?,?,?,?)";
     String sqlAtd = "INSERT INTO tb_atendente (login, senha, nome, administrador) VALUES(?,?,?,?)";
     String sqlPct = "INSERT INTO tb_paciente (nome,idade,endereco,profissaoSaude,vacinado,prioridade, dataVacinacao) VALUES(?,?,?,?,?,?,?)";
-    String sqlRlt = "SELECT * FROM tb_relatorio";
+    String sqlRlt = "SELECT vacinado FROM tb_paciente WHERE vacinado=1 ORDER BY idade ASC;";
     String sqlRemoveAdministrador = "DELETE FROM tb_administrador WHERE id = ?;";
     String sqlRemoveAtendente = "DELETE FROM tb_atendente WHERE id = ?;";
     String sqlRemovePaciente = "DELETE FROM tb_paciente WHERE id = ?;";
@@ -107,7 +108,25 @@ public class AdministradorDAO extends Usuario {
     public void gerarRelatorio(){
         try{
             PreparedStatement request = con.prepareStatement(sqlRlt);
-            request.executeQuery();
+            ResultSet rs = request.executeQuery();
+            Paciente paciente = new Paciente();
+            while(rs.next()){
+                String nome = rs.getString("nome");
+                int idade = rs.getInt("idade");
+                String endereco = rs.getString("endereco");
+                boolean profissaoSaude = rs.getBoolean("profissaoSaude");
+                boolean vacinado = rs.getBoolean("vacinado");
+                int prioridade = rs.getInt("prioridade");
+                java.util.Date dataVacinacao = rs.getDate("dataVacinacao");
+                paciente.setNome(nome);
+                paciente.setIdade(idade);
+                paciente.setEndereco(endereco);
+                paciente.setProfissaoSaude(profissaoSaude);
+                paciente.setVacinado(vacinado);
+                paciente.setPrioridade(prioridade);
+                paciente.setDataVacinacao(dataVacinacao);
+                System.out.println(paciente.isVacinado());
+            }
 
         }catch (Exception e){
             e.printStackTrace();

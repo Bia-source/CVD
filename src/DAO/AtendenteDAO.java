@@ -5,13 +5,11 @@ import model.Paciente;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 public class AtendenteDAO {
     String sqlSearch = "SELECT * FROM tb_paciente WHERE vacinado = 0 ORDER BY prioridade DESC;";
-    String sqlAplicado = "UPDATE tb_paciente SET vacinado=1, dataVacinacao=NOW() WHERE nome=(SELECT ";
+    String sqlAplicado = "UPDATE tb_paciente SET vacinado=1, dataVacinacao=NOW() WHERE nome= ?";
     ConnectionFactory connection = new ConnectionFactory();
     Connection con = connection.conexao();
 
@@ -43,8 +41,8 @@ public class AtendenteDAO {
     }
     public void confirmarVacina(String nome){ //TO-DO
         try{
-            String command = sqlAplicado + nome + "FROM tb_paciente);";
-            PreparedStatement request = con.prepareStatement(command);
+
+            PreparedStatement request = con.prepareStatement(sqlAplicado);
             request.execute();
         }catch (Exception e){
             e.printStackTrace();
