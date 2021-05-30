@@ -9,13 +9,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 public class AdministradorDAO extends Usuario {
-    String sqlAdm = "INSERT INTO tb_administrador (login, senha, nome, administrador) VALUES(?,?,?,?)";
-    String sqlAtd = "INSERT INTO tb_atendente (login, senha, nome, administrador) VALUES(?,?,?,?)";
-    String sqlPct = "INSERT INTO tb_paciente (nome,idade,endereco,profissaoSaude,vacinado,prioridade, dataVacinacao) VALUES(?,?,?,?,?,?,?)";
+    String sqlAdm = "INSERT INTO tb_administrador (login, senha, nome, administrador) VALUES(?,?,?,?);";
+    String sqlAtd = "INSERT INTO tb_atendente (login, senha, nome, administrador) VALUES(?,?,?,?);";
+    String sqlPct = "INSERT INTO tb_paciente (nome,idade,endereco,profissaoSaude,vacinado,prioridade, dataVacinacao) VALUES(?,?,?,?,?,?,?);";
     String sqlRlt = "SELECT vacinado FROM tb_paciente WHERE vacinado=1 ORDER BY idade ASC;";
     String sqlRemoveAdministrador = "DELETE FROM tb_administrador WHERE id = ?;";
     String sqlRemoveAtendente = "DELETE FROM tb_atendente WHERE id = ?;";
-    String sqlRemovePaciente = "DELETE FROM tb_paciente WHERE id = ?;";
     ConnectionFactory connection = new ConnectionFactory();
     Connection con = connection.conexao();
 
@@ -72,7 +71,6 @@ public class AdministradorDAO extends Usuario {
         }catch (Exception e){
             e.printStackTrace();
         }
-
 
     }
     public void removerAdministrador (Integer id){
